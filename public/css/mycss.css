@@ -1,0 +1,18 @@
+#panel,
+#flip {
+    padding: 5px;
+    text-align: center !important;
+    background-color: rgba(240, 240, 240, 1);
+    border: solid 1px #c3c3c3;
+    margin: 5px;
+}
+
+#panel {
+    padding: 50px;
+    display: none;
+}
+
+.form-group.div {
+    margin: 0 auto;
+    width: 30%;
+}

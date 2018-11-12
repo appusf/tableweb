@@ -32,7 +32,8 @@ var Article = sequelize.define('Article Collection', {
     desc: Sequelize.STRING,
     author: Sequelize.TEXT
 }, {
-    freezeTableName: true
+    freezeTableName: true,
+    operatorsAliases: false
 });
 
 
@@ -44,7 +45,7 @@ app.get('/', function(req, res) {
 
 
 app.get('/view', function(req, res) {
-    console.log('In Server');
+    // console.log('In Server');
 
     // Article.findAll().spread(function(result, test) {
     //     productsDataToUse = result.get({
@@ -55,24 +56,47 @@ app.get('/view', function(req, res) {
     // })
 
     Article.all().then(projects => {
-        console.log(projects);
+        // console.log(projects);
         res.send(projects);
 
     })
 
 });
 
-// app.post('/', function(req, res) {
-//     console.log('hi in post /');
+// app.put('/edit', function(req, res) {
 //     console.log(req.body);
-//     res.send(req.body);
 
-// });
+// })
+
+app.put('/edit', (req, res) => {
+    //({ where: { id: req.body.id } })
+
+    console.log('Edit ', req.body)
+
+    Article.all({ where: { id: req.body.id } }).then(() => {
+        return Article.update({ aname: req.body.aname, desc: req.body.desc, author: req.body.author }, { where: { id: req.body.id } }).then(() => {
+            Article.all().then(projects => {
+                //console.log(projects);
+                res.send(projects);
+
+            })
+        })
+    })
+
+
+    // Article.update({ aname: req.body.aname, desc: req.body.desc, author: req.body.author }).then(function() {
+    //     // title will now be 'foooo' but description is the very same as before
+    //     console.log('updated i guess');
+    // })
+
+
+
+});
 
 
 app.post('/add', (req, res) => {
 
-    console.log('In post');
+    //  console.log('In post');
     // console.log('body1 : ', req.body.aname)
     // console.log('body2: ', req.body.desc)
     // console.log('body3 : ', req.body.author)
